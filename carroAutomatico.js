@@ -3,30 +3,37 @@ const carro = {
     velocidade: 0,
 
     ligar: function () {
-        this.ligado ? console.log(`Carro já ligado.`) : (
-            this.ligado = true,
-            this.velocidade = 0,
-            console.log(`Carro ligado. Parado velocidade ${this.velocidade}Kmh`));
-
+        this.ligado ?
+            console.log(`Carro já ligado.`) : (
+                this.ligado = true,
+                console.log(`Carro ligado. velocidade ${this.velocidade} Kmh`));
     },
 
     desligar: function () {
         if (!this.ligado) {
             console.log(`Carro já desligado.`)
         }
-        else {
-            this.ligado = false,
-                this.velocidade = 0,
-                console.log(`Carro desligado. Parado velocidade ${this.velocidade}Kmh`);
-        }
+        else
+            if (this.velocidade > 0) {
+                (console.log(`O carro morreu desacelerando!!!`),
+                    this.ligado = false,
+                    this.velocidade = 0,
+                    console.log(`Carro desligado. Parado velocidade ${this.velocidade}Kmh`)
+                )
+            } else {
+                this.ligado = false,
+                    this.velocidade = 0,
+                    console.log(`Carro desligado. Parado velocidade ${this.velocidade}Kmh`)
+            }
     },
 
     acelerar: function () {
-        !this.ligado ? (console.log(`Não é possível, carro desligado.`),
-            this.start()
-        ) : (
+        !this.ligado ? (
             this.velocidade += 10,
-            console.log(`Carro acelerando. Velocidade ${this.velocidade}`))
+            this.start())
+            : (
+                this.velocidade += 10,
+                console.log(`Carro acelerando. Velocidade ${this.velocidade}`))
     },
 
     desacelerar: function () {
@@ -34,10 +41,9 @@ const carro = {
             console.log(`Não é possível desacelerar carro desligado.`) : (
                 this.velocidade -= 10,
                 this.velocidade < 0 ? (
-                    this.velocidade = 0, this.stop()) : '',
-                console.log(`Carro desacelerando. velocidade ${this.velocidade}Kmh`),
-                this.stop()
-            );
+                    this.velocidade = 0,
+                    this.stop()) : this.stop()
+            )
     },
 
     freia: function () {
